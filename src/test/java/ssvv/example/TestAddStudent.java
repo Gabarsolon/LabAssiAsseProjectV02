@@ -1,9 +1,7 @@
 package ssvv.example;
 
 import domain.Student;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import repository.NotaXMLRepo;
 import repository.StudentXMLRepo;
 import repository.TemaXMLRepo;
@@ -17,7 +15,6 @@ import validation.ValidationException;
  * Unit test for simple App.
  */
 public class TestAddStudent
-    extends TestCase
 {
     StudentValidator studentValidator = new StudentValidator();
     TemaValidator temaValidator = new TemaValidator();
@@ -31,27 +28,11 @@ public class TestAddStudent
     NotaXMLRepo notaXMLRepository = new NotaXMLRepo(filenameNota);
     Service service = new Service(studentXMLRepository, studentValidator, temaXMLRepository, temaValidator, notaXMLRepository, notaValidator);
 
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public TestAddStudent(String testName )
-    {
-        super(testName);
-    }
 
     /**
      * @return the suite of tests being tested
      */
-    public static Test suite()
-    {
-        return new TestSuite( TestAddStudent.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
+    @Test
     public void testIdNotUnique()
     {
         try{
@@ -71,7 +52,7 @@ public class TestAddStudent
             assert true;
         }
     }
-
+    @Test
     public void testGroupNumberSmallerThanZero(){
         try{
             service.addStudent(new Student(
