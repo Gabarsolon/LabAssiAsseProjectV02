@@ -14,8 +14,7 @@ import validation.ValidationException;
 /**
  * Unit test for simple App.
  */
-public class TestAddStudent
-{
+public class TestAddStudent {
     StudentValidator studentValidator = new StudentValidator();
     TemaValidator temaValidator = new TemaValidator();
     String filenameStudent = "fisiere/Studenti.xml";
@@ -33,9 +32,8 @@ public class TestAddStudent
      * @return the suite of tests being tested
      */
     @Test
-    public void tc_1_testIdNotUnique()
-    {
-        try{
+    public void tc_1_testIdNotUnique() {
+        try {
             service.addStudent(new Student(
                     "1003",
                     "T R U F A N U L",
@@ -48,13 +46,14 @@ public class TestAddStudent
             }
 
             assert false;
-        }catch (Exception exception){
+        } catch (Exception exception) {
             assert true;
         }
     }
+
     @Test
-    public void tc_2_testGroupNumberSmallerThanZero(){
-        try{
+    public void tc_2_testGroupNumberSmallerThanZero() {
+        try {
             service.addStudent(new Student(
                     "ID UNIQUE",
                     "T R U F A N U L",
@@ -62,13 +61,13 @@ public class TestAddStudent
                     "trufanul.doardinamobuc@superbet.ro"
             ));
             assert false;
-        }catch(Exception exception){
+        } catch (Exception exception) {
             assert true;
         }
     }
 
     @Test
-    public void tc_3_testNameNotEmpty(){
+    public void tc_3_testNameNotEmpty() {
         service.addStudent(new Student(
                 "SOME UNIQUE ID",
                 "Nume",
@@ -80,8 +79,8 @@ public class TestAddStudent
     }
 
     @Test
-    public void tc_4_testNameEmpty(){
-        try{
+    public void tc_4_testNameEmpty() {
+        try {
             service.addStudent(new Student(
                     "SOME UNIQUE ID",
                     "",
@@ -90,13 +89,13 @@ public class TestAddStudent
             ));
             assert false;
             service.deleteStudent("SOME UNIQUE ID");
-        }catch (Exception exception){
+        } catch (Exception exception) {
             assert true;
         }
     }
 
     @Test
-    public void tc_5_testValidEmail(){
+    public void tc_5_testValidEmail() {
         service.addStudent(new Student(
                 "SOME UNIQUE ID",
                 "Gabarsolonul nambar uan",
@@ -108,8 +107,8 @@ public class TestAddStudent
     }
 
     @Test
-    public void tc_6_testInvalidEmail(){
-        try{
+    public void tc_6_testInvalidEmail() {
+        try {
             service.addStudent(new Student(
                     "SOME UNIQUE ID",
                     "Gabarsolonul nambar uan",
@@ -118,11 +117,82 @@ public class TestAddStudent
             ));
 
             assert false;
-        }catch (Exception exception){
+        } catch (Exception exception) {
             assert true;
-        }
-        finally {
+        } finally {
             service.deleteStudent("SOME UNIQUE ID");
         }
+    }
+
+    @Test
+    public void tc_7_testGroupNumberIsZero() {
+        try {
+            service.addStudent(new Student(
+                    "SOME UNIQUE ID",
+                    "Gabarsolonul nambar uan",
+                    0,
+                    "email"
+            ));
+
+            assert false;
+        } catch (Exception exception) {
+            assert true;
+        } finally {
+            service.deleteStudent("SOME UNIQUE ID");
+        }
+    }
+
+    @Test
+    public void tc_8_testGroupNumberIsOne() {
+        service.addStudent(new Student(
+                "SOME UNIQUE ID",
+                "Gabarsolonul nambar uan",
+                1,
+                "email"
+        ));
+        assert service.findStudent("SOME UNIQUE ID") != null;
+        service.deleteStudent("SOME UNIQUE ID");
+    }
+
+    @Test
+    public void tc_9_testGroupNumberIsMaxIntPlusOne() {
+        try {
+            service.addStudent(new Student(
+                    "SOME UNIQUE ID",
+                    "Gabarsolonul nambar uan",
+                    Integer.MAX_VALUE + 1,
+                    "email"
+            ));
+
+            assert false;
+        } catch (Exception exception) {
+            assert true;
+        } finally {
+            service.deleteStudent("SOME UNIQUE ID");
+        }
+    }
+
+    @Test
+    public void tc_10_testGroupNumberIsMaxIntMinusOne() {
+        service.addStudent(new Student(
+                "SOME UNIQUE ID",
+                "Gabarsolonul nambar uan",
+                Integer.MAX_VALUE - 1,
+                "email"
+        ));
+        assert service.findStudent("SOME UNIQUE ID") != null;
+        service.deleteStudent("SOME UNIQUE ID");
+    }
+
+    @Test
+    public void tc_11_testGroupNumberIsMaxInt() {
+        service.addStudent(new Student(
+                "SOME UNIQUE ID",
+                "Gabarsolonul nambar uan",
+                Integer.MAX_VALUE,
+                "email"
+        ));
+        assert service.findStudent("SOME UNIQUE ID") != null;
+        service.deleteStudent("SOME UNIQUE ID");
     }
 }
