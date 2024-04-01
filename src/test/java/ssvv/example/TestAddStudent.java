@@ -33,7 +33,7 @@ public class TestAddStudent
      * @return the suite of tests being tested
      */
     @Test
-    public void testIdNotUnique()
+    public void tc_1_testIdNotUnique()
     {
         try{
             service.addStudent(new Student(
@@ -53,17 +53,76 @@ public class TestAddStudent
         }
     }
     @Test
-    public void testGroupNumberSmallerThanZero(){
+    public void tc_2_testGroupNumberSmallerThanZero(){
         try{
             service.addStudent(new Student(
                     "ID UNIQUE",
                     "T R U F A N U L",
-                    -360,
+                    -1,
                     "trufanul.doardinamobuc@superbet.ro"
             ));
             assert false;
         }catch(Exception exception){
             assert true;
+        }
+    }
+
+    @Test
+    public void tc_3_testNameNotEmpty(){
+        service.addStudent(new Student(
+                "SOME UNIQUE ID",
+                "Nume",
+                360,
+                "trufanul.ddb@superbere.com"
+        ));
+        assert service.findStudent("SOME UNIQUE ID") != null;
+        service.deleteStudent("SOME UNIQUE ID");
+    }
+
+    @Test
+    public void tc_4_testNameEmpty(){
+        try{
+            service.addStudent(new Student(
+                    "SOME UNIQUE ID",
+                    "",
+                    360,
+                    "trufanul.ddb@superbere.com"
+            ));
+            assert false;
+            service.deleteStudent("SOME UNIQUE ID");
+        }catch (Exception exception){
+            assert true;
+        }
+    }
+
+    @Test
+    public void tc_5_testValidEmail(){
+        service.addStudent(new Student(
+                "SOME UNIQUE ID",
+                "Gabarsolonul nambar uan",
+                937,
+                "gabarsolon.fcsb@gmail.com"
+        ));
+        assert service.findStudent("SOME UNIQUE ID") != null;
+        service.deleteStudent("SOME UNIQUE ID");
+    }
+
+    @Test
+    public void tc_6_testInvalidEmail(){
+        try{
+            service.addStudent(new Student(
+                    "SOME UNIQUE ID",
+                    "Gabarsolonul nambar uan",
+                    937,
+                    "email"
+            ));
+
+            assert false;
+        }catch (Exception exception){
+            assert true;
+        }
+        finally {
+            service.deleteStudent("SOME UNIQUE ID");
         }
     }
 }
