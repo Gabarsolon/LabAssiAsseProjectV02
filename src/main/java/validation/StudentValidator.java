@@ -20,7 +20,7 @@ public class StudentValidator implements Validator<Student> {
         if(entity.getNume() == ""){
             throw new ValidationException("Nume incorect!");
         }
-        if(entity.getGrupa() < 0) {
+        if(entity.getGrupa() < 1) {
             throw new ValidationException("Grupa incorecta!");
         }
         if(entity.getEmail() == null){
@@ -30,6 +30,9 @@ public class StudentValidator implements Validator<Student> {
             throw new ValidationException("Nume incorect!");
         }
         if(entity.getEmail().equals("")){
+            throw new ValidationException("Email incorect!");
+        }
+        if (!entity.getEmail().contains("@") && !entity.getEmail().contains(".com")){
             throw new ValidationException("Email incorect!");
         }
     }
