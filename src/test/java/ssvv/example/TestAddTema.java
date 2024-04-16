@@ -38,22 +38,42 @@ public class TestAddTema {
     }
 
     @Test
-    public void tc_3_InvalidDescription(){
-        try{
+    public void tc_3_InvalidDescription() {
+        try {
             service.addTema(new Tema("1234", "", 2, 1));
             assert false;
-        }catch (Exception e){
+        } catch (Exception e) {
             assert true;
         }
     }
 
     @Test
-    public void tc_4_InvalidDeadline(){
-        try{
+    public void tc_4_InvalidDeadline() {
+        try {
             service.addTema(new Tema("1234", "fcsb", 16, 14));
             assert false;
-        }catch (Exception e){
+        } catch (Exception e) {
             assert true;
+        }
+    }
+
+    @Test
+    public void tc_5_InvalidReceptionDate() {
+        try {
+            service.addTema(new Tema("4321", "ddb", 12, 15));
+            assert false;
+        } catch (Exception e) {
+            assert true;
+        }
+    }
+
+    @Test
+    public void tc_6_ValidAssignment() {
+        try {
+            service.addTema(new Tema("1", "ddb in adn", 14, 13));
+            assert true;
+        } catch (Exception e) {
+            assert false;
         }
     }
 }
