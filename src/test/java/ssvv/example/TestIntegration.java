@@ -26,7 +26,7 @@ public class TestIntegration {
     NotaXMLRepo notaXMLRepository = new NotaXMLRepo(filenameNota);
     Service service = new Service(studentXMLRepository, studentValidator, temaXMLRepository, temaValidator, notaXMLRepository, notaValidator);
 
-
+    ///BIG BANGULETZ
     @Test
     public void tc_1_AddGradeStudentNonexistent() {
         try {
@@ -72,6 +72,45 @@ public class TestIntegration {
             assert true;
         } catch (Exception e) {
             assert false;
+        } finally {
+            service.deleteStudent("SOME UNIQUE ID");
+            service.deleteTema("420");
+            service.deleteNota("3600");
+        }
+    }
+
+    //INCREMENTAL INTEGRATION, duh!
+    @Test
+    public void tc_5_AddStudentValidEmail() {
+        service.addStudent(new Student(
+                "SOME UNIQUE ID",
+                "Gabarsolonul nambar uan",
+                937,
+                "gabarsolon.fcsb@gmail.com"
+        ));
+        assert service.findStudent("SOME UNIQUE ID") != null;
+        service.deleteStudent("SOME UNIQUE ID");
+    }
+
+    @Test
+    public void tc_6_AddAssignmentAddStudent() {
+        try {
+            service.addStudent(new Student(
+                    "SOME UNIQUE ID",
+                    "Gabarsolonul nambar uan",
+                    937,
+                    "gabarsolon.fcsb@gmail.com"
+            ));
+            assert service.findStudent("SOME UNIQUE ID") != null;
+
+            service.addTema(new Tema("420", "CINE SARE-I ROS-ALBASTRU, AY! AY!", 14, 10));
+            assert service.findTema("420") != null;
+        }catch (Exception e){
+            assert false;
+        }
+        finally {
+            service.deleteStudent("SOME UNIQUE ID");
+            service.deleteNota("420");
         }
     }
 }
