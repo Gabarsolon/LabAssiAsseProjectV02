@@ -113,4 +113,34 @@ public class TestIntegration {
             service.deleteNota("420");
         }
     }
+
+    @Test
+    public void tc_7_AddAssignmentAddStudentGradeStudentForAssignment(){
+        try{
+            service.addStudent(new Student(
+                    "SOME UNIQUE ID",
+                    "Gabarsolonul nambar uan",
+                    937,
+                    "gabarsolon.fcsb@gmail.com"
+            ));
+            assert service.findStudent("SOME UNIQUE ID") != null;
+
+            service.addTema(new Tema("420", "CINE SARE-I ROS-ALBASTRU, AY! AY!", 14, 10));
+            assert service.findTema("420") != null;
+
+            service.addNota(
+                    new Nota("3600", "SOME UNIQUE ID", "420", 7.8965123, LocalDate.of(2018, 12, 19)),
+                    "a fost un feedback bun, dar din pacate nu prea a fost. Adik, in prima faza cand..., (aoki)"
+
+            );
+            assert service.findNota("3600") != null;
+        }catch (Exception e){
+            assert false;
+        }
+        finally {
+            service.deleteStudent("SOME UNIQUE ID");
+            service.deleteNota("420");
+            service.deleteNota("3600");
+        }
+    }
 }
